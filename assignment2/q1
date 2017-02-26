@@ -1,6 +1,46 @@
+q1.
+a)
 
-q1. b)
+data segment
+i dw 1000
+j dw 1000
+k db 50
+data ends
 
+code segment
+assume cs:code, ds:data
+start: mov ax, data
+mov ds, ax
+
+call delay1
+mov ah, 4ch
+int 21h
+
+delay1 proc near
+l1: call delay2
+mov cx, i
+loop l1
+ret
+delay1 endp
+
+delay2 proc near
+l1: call delay3
+mov cx, j
+dec cx
+jnz l1
+ret
+delay2 endp
+
+delay3 proc near
+mov cx, k
+l1: dec cx
+jnz l1
+ret
+delay3 endp
+
+
+q1.
+b)
 
 data segment
 a db 09h, 02h, 07h, 05h, 01h, 06h
