@@ -1,6 +1,54 @@
 2.
 a)
+
 ax=03h
 bx=01
 cx=04h
 dx=04h
+
+2.
+b)
+
+data segment
+str1 db 'manipal$'
+str2 db 'mapinal$'
+ans db ?
+data ends
+code segment
+assume cs:code, ds:data, es:data
+start: mov ax, data
+mov ds, ax
+mov es, ax
+mov al, '$'
+lea si, str1
+mov cl, 00h
+lea di, str2
+cld
+
+go:
+mov bh, [si]
+mov bl, [di]
+sub bh, bl
+add cl, bh
+inc si
+scasb
+jnz go
+
+cmp cl, 00h
+ja greater
+je equals
+mov ans, 2
+jmp last
+
+greater:
+mov ans, 1
+jmp last
+
+equals:
+mov ans, 0
+
+last:
+mov ah, 4ch
+int 21h
+code ends
+end start
